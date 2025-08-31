@@ -9,29 +9,13 @@ const Index = () => {
   const [playerData, setPlayerData] = useState<{ name: string; contact: string } | null>(null);
 
   const handleFormSubmit = async (name: string, contact: string) => {
-    // Simulate API calls from original HTML
-    try {
-      // Check if user already played
-      // const checkRes = await fetch(`/checkUser?contact=${encodeURIComponent(contact)}`);
-      // const userData = await checkRes.json();
-      
-      // if (userData.alreadyPlayed) {
-      //   // Handle already played scenario
-      //   return;
-      // }
+    setPlayerData({ name, contact });
+    setCurrentPage('game');
+  };
 
-      // Register user
-      // await fetch('/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, contact })
-      // });
-
-      setPlayerData({ name, contact });
-      setCurrentPage('game');
-    } catch (error) {
-      console.error('Error processing user:', error);
-    }
+  const handleBackToForm = () => {
+    setCurrentPage('form');
+    setPlayerData(null);
   };
 
   return (
@@ -78,6 +62,7 @@ const Index = () => {
               <Game 
                 playerName={playerData.name} 
                 playerContact={playerData.contact}
+                onBackToForm={handleBackToForm}
               />
             )
           )}

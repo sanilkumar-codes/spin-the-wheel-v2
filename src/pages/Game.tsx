@@ -3,34 +3,34 @@ import { SpinningWheel } from '@/components/SpinningWheel';
 import { Card, CardContent } from '@/components/ui/card';
 import { Confetti } from '@/components/Confetti';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 interface GameProps {
   playerName: string;
   playerContact: string;
+  onBackToForm: () => void;
 }
 
-export const Game = ({ playerName, playerContact }: GameProps) => {
+export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => {
   const [result, setResult] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
+  const [showCongratulations, setShowCongratulations] = useState(false);
   const { toast } = useToast();
 
   const handleWin = async (prize: string) => {
     setResult(prize);
     setShowConfetti(true);
     setGameCompleted(true);
+    setShowCongratulations(true);
 
-    // Simulate API call to save result
+    // Save result to backend
     try {
-      // await fetch('/saveResult', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ contact: playerContact, prize })
-      // });
-      
-      toast({
-        title: "Congratulations! 🎉",
-        description: `You won: ${prize}!`,
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/saveResult`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact: playerContact, prize })
       });
     } catch (error) {
       console.error('Error saving result:', error);
@@ -38,6 +38,11 @@ export const Game = ({ playerName, playerContact }: GameProps) => {
 
     // Stop confetti after 5 seconds
     setTimeout(() => setShowConfetti(false), 5000);
+  };
+
+  const handleCloseModal = () => {
+    setShowCongratulations(false);
+    onBackToForm();
   };
 
   return (
@@ -60,6 +65,26 @@ export const Game = ({ playerName, playerContact }: GameProps) => {
           </CardContent>
         </Card>
       )}
+
+      {/* Congratulations Popup */}
+      <Dialog open={showCongratulations} onOpenChange={setShowCongratulations}>
+        <DialogContent className="bg-card border-casino-gold/20 shadow-[var(--shadow-gold)]">
+          <DialogHeader>
+            <DialogTitle className="text-center text-casino-gold text-2xl font-bold">
+              🎉 Congratulations!
+            </DialogTitle>
+          </DialogHeader>
+          <div className="text-center py-4">
+            <div className="text-xl font-semibold mb-4">You won: {result}!</div>
+            <Button
+              onClick={handleCloseModal}
+              className="bg-casino-gold text-casino-black hover:bg-casino-gold-dark font-bold"
+            >
+              Continue
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Confetti active={showConfetti} />
     </div>

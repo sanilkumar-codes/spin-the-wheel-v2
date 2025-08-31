@@ -28,7 +28,34 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
 
     setLoading(true);
     try {
+      // Check if user already played
+      const checkRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/checkUser?contact=${encodeURIComponent(contact)}`);
+      const userData = await checkRes.json();
+      
+      if (userData.alreadyPlayed) {
+        toast({
+          title: "Already Played",
+          description: `You already won: ${userData.prize}! Show this screen to the Salon manager.`,
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Register user
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, contact })
+      });
+
       onSubmit(name, contact);
+    } catch (error) {
+      console.error('Error processing user:', error);
+      toast({
+        title: "Error",
+        description: "Failed to process your request. Please try again.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
