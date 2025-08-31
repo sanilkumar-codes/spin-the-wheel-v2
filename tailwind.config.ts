@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				casino: {
+					gold: 'hsl(var(--casino-gold))',
+					'gold-dark': 'hsl(var(--casino-gold-dark))',
+					'gold-light': 'hsl(var(--casino-gold-light))',
+					black: 'hsl(var(--casino-black))',
+					'black-light': 'hsl(var(--casino-black-light))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
