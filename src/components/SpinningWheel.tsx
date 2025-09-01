@@ -7,7 +7,7 @@ interface SpinningWheelProps {
   disabled?: boolean;
 }
 
-const gifts = ["Gift Card", "Headphones", "T-Shirt", "Mug", "Pen", "Discount Coupon"];
+const gifts = ["Free Kerastase Samples", "50% off on haircut", "Complimentary wash", "40% off on foot massage", "999 body therapy", "20% off on loreal hair spa"];
 const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
 const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
@@ -83,16 +83,34 @@ ctx.beginPath();
       ctx.rotate(i * angle + angle / 2);
       
       // Draw icon
-      ctx.font = "32px Arial";
+      /*ctx.font = "32px Arial";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(iconEmojis[i], radius - 65, -10);
+      ctx.fillText(iconEmojis[i], radius - 65, -10);*/
       
       // Draw text
       ctx.textAlign = "center";
-      ctx.fillStyle = i % 2 === 0 ? "#000" : "#dec7a6";
-      ctx.font = "bold 14px Arial";
-      ctx.fillText(gifts[i], radius - 65, 15);
+ctx.fillStyle = i % 2 === 0 ? "#000" : "#dec7a6";
+ctx.font = "bold 14px Arial";
+
+let text = gifts[i];
+let words = text.split(" ");
+
+// Break into 3 lines: first word, second word, rest
+let line1 = words[0] || "";
+let line2 = words[1] || "";
+let line3 = words.slice(2).join(" ") || "";
+
+if (line3) {
+  ctx.fillText(line1, radius - 65, -15);   // first line
+  ctx.fillText(line2, radius - 65, 0);  // second line
+  ctx.fillText(line3, radius - 65, 15);  // third line
+} else if (line2) {
+  ctx.fillText(line1, radius - 65, -10);   // first line
+  ctx.fillText(line2, radius - 65, 10);  // second line
+} else {
+  ctx.fillText(line1, radius - 65, 15);  // single line
+}
       
       ctx.restore();
     }
