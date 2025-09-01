@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Gift, Headphones, Shirt, Coffee, Pen, Ticket } from 'lucide-react';
 
 interface SpinningWheelProps {
   onWin: (prize: string) => void;
@@ -8,11 +9,47 @@ interface SpinningWheelProps {
 
 const gifts = ["Gift Card", "Headphones", "T-Shirt", "Mug", "Pen", "Discount Coupon"];
 const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
+const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
 export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [spinning, setSpinning] = useState(false);
   const [currentRotation, setCurrentRotation] = useState(0);
+
+  const createIconImage = (IconComponent: any, color: string, size: number = 32) => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', size.toString());
+    svg.setAttribute('height', size.toString());
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', color);
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    
+    // Get the icon's path data by creating a temporary React element
+    const tempDiv = document.createElement('div');
+    const iconElement = IconComponent({ size, color, strokeWidth: 2 });
+    
+    // This is a simplified approach - in practice you'd need to extract the actual SVG paths
+    // For now, we'll use Unicode emojis as a fallback
+    const iconEmojis = ["🎁", "🎧", "👕", "☕", "✏️", "🎫"];
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.font = `${size * 0.8}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(iconEmojis[Math.floor(Math.random() * iconEmojis.length)], size/2, size/2);
+    }
+    
+    const img = new Image();
+    img.src = canvas.toDataURL();
+    return img;
+  };
 
   const drawWheel = () => {
     const canvas = canvasRef.current;
@@ -27,6 +64,13 @@ export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) =
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Icon emojis for each gift
+    const iconEmojis = ["🎁", "🎧", "👕", "☕", "✏️", "🎫"];
+ctx.beginPath();
+    ctx.arc(radius, radius, radius - 2, 0, 2 * Math.PI);
+    ctx.strokeStyle = "#dec7a6";
+    ctx.lineWidth = 16;
+    ctx.stroke();
     for (let i = 0; i < numSegments; i++) {
       ctx.beginPath();
       ctx.moveTo(radius, radius);
@@ -37,10 +81,19 @@ export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) =
       ctx.save();
       ctx.translate(radius, radius);
       ctx.rotate(i * angle + angle / 2);
-      ctx.textAlign = "right";
+      
+      // Draw icon
+      ctx.font = "32px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(iconEmojis[i], radius - 65, -10);
+      
+      // Draw text
+      ctx.textAlign = "center";
       ctx.fillStyle = i % 2 === 0 ? "#000" : "#dec7a6";
-      ctx.font = "bold 16px Arial";
-      ctx.fillText(gifts[i], radius - 10, 5);
+      ctx.font = "bold 14px Arial";
+      ctx.fillText(gifts[i], radius - 65, 15);
+      
       ctx.restore();
     }
   };
@@ -90,6 +143,9 @@ export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) =
           height={320}
           className="rounded-full shadow-[var(--shadow-gold)]"
         />
+<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-casino-gold rounded-full shadow-lg border-4 border-casino-black z-10 flex items-center justify-center">
+          <div className="w-4 h-4 bg-casino-black rounded-full"></div>
+        </div>
       </div>
       <Button
         onClick={spin}
