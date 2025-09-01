@@ -26,7 +26,15 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
       });
       return;
     }
-
+// Validate contact number is exactly 10 digits
+    if (!/^\d{10}$/.test(contact.trim())) {
+      toast({
+        title: "Invalid Contact Number",
+        description: "Please enter a valid 10-digit contact number",
+        variant: "destructive"
+      });
+      return;
+    }
     setLoading(true);
     try {
       // Check if user already played
@@ -97,7 +105,7 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading...
+                Loading your spin...
               </>
             ) : (
               'Continue'
