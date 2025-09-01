@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { Loader2 } from 'lucide-react';
 
 interface UserFormProps {
   onSubmit: (name: string, contact: string) => void;
@@ -93,7 +94,14 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
             disabled={loading}
             className="w-full bg-casino-gold text-casino-black hover:bg-casino-gold-dark font-bold py-3 shadow-[var(--shadow-gold)] transition-[var(--transition-smooth)]"
           >
-            {loading ? 'Loading...' : 'Continue'}
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              'Continue'
+            )}
           </Button>
         </form>
       </CardContent>
