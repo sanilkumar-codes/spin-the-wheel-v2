@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spin and Win</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: #000; /* black top/bottom area will show here */
+    color: #dec7a6;
+  }
+
+  .container {
+    max-width: 420px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* Logo stays at the top, outside the background hero */
+  #logo { max-width: 160px; margin: 10px auto; display: block; }
+
+  /* HERO: only the first page shows this background area */
+  .hero {
+    width: 100%;
+    height: 80vh;              /* ~80% of screen height */
+    margin: 10vh 0;            /* equal top & bottom space = (100vh - 80vh)/2 = 10vh */
+    background-image: url('assets/form-bg.jpg'); /* put your background image here */
+    background-size: cover;
+    background-position: center;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  /* inner card so text inputs remain readable on top of background */
+  .hero .card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(0,0,0,0.45);
+    padding: 18px;
+    border-radius: 8px;
+    color: #dec7a6;
+  }
+
+  #heading { font-size: 24px; font-weight: bold; margin-bottom: 14px; }
+
+  #form, #game { display: none; }
+
+  h3 { margin-bottom: 12px; }
+  input { padding: 10px; width: 100%; margin: 8px 0; border-radius: 4px; border: 1px solid #dec7a6; background: #000; color: #dec7a6; }
+  button { padding: 10px 20px; margin-top: 10px; border: none; border-radius: 6px; background: #dec7a6; color: #000; font-size: 16px; cursor: pointer; transition: background 0.3s; }
+  button:disabled { background: #555; cursor: not-allowed; }
+  button:hover:not(:disabled) { background: #c4b38c; }
+  #result { margin-top: 12px; font-weight: bold; font-size: 16px; }
+  #wheel-container { position: relative; width: 320px; height: 320px; margin: 20px auto; }
+  #pointer { width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent; border-bottom: 28px solid #dec7a6; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); }
+  canvas.confetti { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- logo stays outside the hero/background image -->
+    <img id="logo" src="assets/logo.png" alt="Logo">
+
+    <!-- HERO: first page area with background -->
+    <div class="hero" id="hero">
+      <div class="card">
+        <div id="heading">Spin and Win</div>
+        <div id="form" aria-label="User Details Form">
+          <h3>Enter Your Details</h3>
+          <input id="name" placeholder="Name" aria-label="Name">
+          <input id="contact" placeholder="Contact Number" aria-label="Contact Number">
+          <button id="continueBtn">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game is outside the hero so when we hide hero, the game area shows without the background -->
+    <div id="game" aria-label="Spin the Wheel Game">
+      <div id="wheel-container">
+        <canvas id="wheelCanvas" width="320" height="320"></canvas>
+        <div id="pointer" aria-hidden="true"></div>
+      </div>
+      <button id="spinBtn">🎡 Spin</button>
+      <div id="result" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <canvas class="confetti" id="confetti"></canvas>
+
+<script>
+  // --- Gifts and colors ---
+  const gifts = ["Gift Card", "Headphones", "T-Shirt", "Mug", "Pen", "Discount Coupon"];
+  const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
+
+  const wheelCanvas = document.getElementById('wheelCanvas');
+  const ctx = wheelCanvas.getContext('2d');
+  const numSegments = gifts.length;
+  const radius = wheelCanvas.width / 2;
+
+  // --- Draw wheel ---
+  function drawWheel() {
+    const angle = (2 * Math.PI) / numSegments;
+    ctx.clearRect(0,0,wheelCanvas.width,wheelCanvas.height);
+    for (let i = 0; i < numSegments; i++) {
+      ctx.beginPath();
+      ctx.moveTo(radius, radius);
+      ctx.arc(radius, radius, radius, i * angle, (i + 1) * angle);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(i * angle + angle / 2);
+      ctx.textAlign = "right";
+      ctx.fillStyle = i % 2 === 0 ? "#000" : "#dec7a6";
+      ctx.font = "bold 16px Arial";
+      ctx.fillText(gifts[i], radius - 10, 5);
+      ctx.restore();
+    }
+  }
+  drawWheel();
+  let spinning = false;
+  let currentRotation = 0;
+
+  // --- Confetti ---
+  const canvas = document.getElementById('confetti');
+  const confCtx = canvas.getContext('2d');
+  function resizeConfetti() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeConfetti();
+  window.addEventListener('resize', resizeConfetti);
+
+  let confAnimId = null;
+  let confetti = [];
+
+  function launchConfetti() {
+    confetti = Array.from({ length: 120 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * -canvas.height, r: Math.random() * 6 + 4, s: Math.random() * 3 + 2 }));
+    if (confAnimId) cancelAnimationFrame(confAnimId);
+    const startTime = Date.now();
+    function draw() {
+      confCtx.clearRect(0,0,canvas.width,canvas.height);
+      confetti.forEach(c => {
+        confCtx.beginPath();
+        confCtx.arc(c.x, c.y, c.r, 0, Math.PI*2);
+        confCtx.fillStyle = 'hsl(' + (Math.random()*360) + ',80%,50%)';
+        confCtx.fill();
+        c.y += c.s;
+        if (c.y > canvas.height) c.y = -10;
+      });
+      if (Date.now() - startTime < 5000) confAnimId = requestAnimationFrame(draw);
+      else { confCtx.clearRect(0,0,canvas.width,canvas.height); confetti=[]; confAnimId=null; }
+    }
+    draw();
+  }
+
+  // --- Spin function ---
+  function spin(contact) {
+    if (spinning) return;
+    spinning = true;
+    const spins = 5 + Math.floor(Math.random() * 4);
+    const randomDeg = Math.random() * 360;
+    const totalDeg = spins * 360 + randomDeg;
+    const targetRotation = currentRotation + totalDeg;
+    wheelCanvas.style.transition = 'transform 5s cubic-bezier(.33,1,.68,1)';
+    wheelCanvas.style.transform = 'rotate(' + targetRotation + 'deg)';
+    setTimeout(async () => {
+      currentRotation = targetRotation % 360;
+      const rotationDeg = currentRotation % 360;
+      const adjustedDeg = (rotationDeg + 90) % 360;
+      const anglePerSegment = 360 / numSegments;
+      const index = Math.floor(numSegments - (adjustedDeg / anglePerSegment)) % numSegments;
+      const prize = gifts[(index + numSegments) % numSegments];
+      document.getElementById('result').innerText = '🎉 You won: ' + prize + '! Show this screen to the Salon manager to claim your reward.';
+      launchConfetti();
+      spinning = false;
+      document.getElementById('spinBtn').disabled = true;
+      try {
+        await fetch('/saveResult', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ contact, prize })
+        });
+      } catch (e) {
+        console.warn('saveResult failed', e);
+      }
+    }, 5200);
+  }
+
+  // --- Check contact ---
+  async function checkContact(contact) {
+    const res = await fetch('/checkUser?contact=' + encodeURIComponent(contact));
+    return await res.json();
+  }
+
+  // --- Form submit ---
+  document.getElementById('continueBtn').addEventListener('click', async () => {
+    const name = document.getElementById('name').value.trim();
+    const contact = document.getElementById('contact').value.trim();
+    if (!name || !contact) return alert('Please enter name and contact');
+    try {
+      const data = await checkContact(contact);
+      if (data && data.alreadyPlayed) {
+        // hide the hero (background) and show the game area with the prize message
+        const hero = document.getElementById('hero');
+        if (hero) hero.style.display = 'none';
+        document.getElementById('game').style.display = 'block';
+        document.getElementById('result').innerText = 'You already won: ' + data.prize + '! Show this screen to the Salon manager to claim your reward.';
+        document.getElementById('spinBtn').disabled = true;
+        document.getElementById('form').style.display = 'none';
+        return;
+      }
+
+      await fetch('/register', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, contact })
+      });
+
+      // on successful register, hide hero (so the background image is removed) and show the game
+      const hero = document.getElementById('hero');
+      if (hero) hero.style.display = 'none';
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      document.getElementById('spinBtn').addEventListener('click', () => spin(contact));
+    } catch (e) {
+      console.error(e);
+      alert('An error occurred. Try again.');
+    }
+  });
+
+  // --- Show form on page load ---
+  window.onload = () => {
+    document.getElementById('form').style.display = 'block';
+  };
+</script>
+</body>
+</html>
