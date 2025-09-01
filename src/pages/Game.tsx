@@ -44,6 +44,14 @@ export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => 
     setShowCongratulations(false);
     onBackToForm();
   };
+const prizeImages: Record<string, string> = {
+  "Free Kerastase Samples": "/assets/samples.jpg",
+  "50% off on haircut": "/assets/haircut.jpg",
+  "Complimentary wash": "/assets/wash.jpg",
+  "40% off on foot massage": "/assets/footmassage.jpg",
+  "999 body therapy": "/assets/bodymassage.jpg",
+  "20% off on loreal hair spa": "/assets/hairspa.jpg",
+};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4">
@@ -64,6 +72,14 @@ export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => 
 }}>
 
         <DialogContent className="bg-card border-casino-gold/20 shadow-[var(--shadow-gold)]">
+			{/* Image above Congratulations */}
+  <div className="flex justify-center mb-4">
+    <img 
+      src={prizeImages[result]}   // 👈 replace with your image path (e.g. /assets/logo.png)
+      alt={result}
+      className="w-90 h-80 object-contain"
+    />
+  </div>
           <DialogHeader>
             <DialogTitle className="text-center text-casino-gold text-2xl font-bold">
               🎉 Congratulations!
