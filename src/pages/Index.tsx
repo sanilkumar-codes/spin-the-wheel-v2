@@ -48,12 +48,12 @@ const Index = () => {
           {currentPage === 'form' ? (
             <div className="text-center space-y-8">
               <div>
-                <h1 className="text-4xl font-bold text-casino-gold mb-4 drop-shadow-lg">
-                  Spin and Win
-                </h1>
-                <p className="text-casino-gold-light text-lg drop-shadow">
-                  Try your luck and win amazing prizes!
-                </p>
+                <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+  Spin and Win
+</h1>
+<p className="text-white text-lg drop-shadow">
+  Try your luck and win amazing prizes!
+</p>
               </div>
               <UserForm onSubmit={handleFormSubmit} />
             </div>
