@@ -56,7 +56,7 @@ const prizeImages: Record<string, string> = {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4">
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-casino-gold mb-2">Welcome, {playerName}!</h2>
+        <h2 className="text-3xl font-bold text-casino-gold mb-2" style={{ fontFamily: '"Baskerville Old Face", serif' }}>Welcome, {playerName}!</h2>
         <p className="text-muted-foreground">Ready to spin and win?</p>
       </div>
 
