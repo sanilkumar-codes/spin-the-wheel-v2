@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { UserForm } from '@/components/UserForm';
 import { Game } from '@/pages/Game';
-import casinoBackground from '@/assets/casino-background.jpg';
+import casinoBackground from '@/assets/form-bg.jpg';
 import logo from '@/assets/logo.png';
 
 const Index = () => {
@@ -25,7 +25,7 @@ const Index = () => {
         <img 
           src={logo} 
           alt="Spin and Win Logo" 
-          className="h-16 w-16 object-contain"
+          className="h-16 w-21 object-contain"
         />
       </div>
 

@@ -54,20 +54,15 @@ export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => 
 
       <SpinningWheel onWin={handleWin} disabled={gameCompleted} />
 
-      {result && (
-        <Card className="w-full max-w-md bg-card border-casino-gold/20 shadow-[var(--shadow-gold)]">
-          <CardContent className="p-6 text-center">
-            <div className="text-2xl font-bold text-casino-gold mb-2">🎉 Congratulations!</div>
-            <div className="text-lg font-semibold mb-3">You won: {result}!</div>
-            <div className="text-sm text-muted-foreground">
-              Show this screen to the Salon manager to claim your reward.
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      
 
       {/* Congratulations Popup */}
-      <Dialog open={showCongratulations} onOpenChange={setShowCongratulations}>
+      <Dialog open={showCongratulations} onOpenChange={(open) => {
+  if (!open) {
+    handleCloseModal();
+  }
+}}>
+
         <DialogContent className="bg-card border-casino-gold/20 shadow-[var(--shadow-gold)]">
           <DialogHeader>
             <DialogTitle className="text-center text-casino-gold text-2xl font-bold">
@@ -76,6 +71,9 @@ export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => 
           </DialogHeader>
           <div className="text-center py-4">
             <div className="text-xl font-semibold mb-4">You won: {result}!</div>
+	    <div className="text-sm font-semibold mb-4">
+              Show this screen to the Salon manager to claim your reward.
+            </div>
             <Button
               onClick={handleCloseModal}
               className="bg-casino-gold text-casino-black hover:bg-casino-gold-dark font-bold"
