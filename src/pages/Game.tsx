@@ -61,9 +61,7 @@ const prizeImages: Record<string, string> = {
         style={{
           backgroundImage: "url('/assets/casino-background.jpg')", // Replace with your background image path
           backgroundSize: 'cover',
-    backgroundPosition: 'center top', // Shows top portion on mobile
-    backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed'
+    
         }}
       ></div>
       <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4 relative z-10 pt-28"> {/* Content wrapper */}
