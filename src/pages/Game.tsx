@@ -60,8 +60,10 @@ const prizeImages: Record<string, string> = {
  // Adjust opacity as needed
         style={{
           backgroundImage: "url('/assets/casino-background.jpg')", // Replace with your background image path
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+    backgroundPosition: 'center top', // Shows top portion on mobile
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed'
         }}
       ></div>
       <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4 relative z-10 pt-28"> {/* Content wrapper */}
