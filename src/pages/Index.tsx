@@ -21,7 +21,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-casino-black">
       {/* Logo - Always visible at top outside background */}
-      <div className="h-[10vh] flex items-center justify-center">
+      <div className="h-[10vh] flex items-center justify-center relative z-20">
         <img 
           src={logo} 
           alt="Spin and Win Logo" 
