@@ -59,7 +59,7 @@ const prizeImages: Record<string, string> = {
         className="fixed inset-0 h-full z-0"
  // Adjust opacity as needed
         style={{
-          backgroundImage: "url('/assets/casino-background.jpg')", // Replace with your background image path
+          backgroundImage: "url('/assets/casino-background.png')", // Replace with your background image path
           backgroundSize: 'cover',
     
         }}
