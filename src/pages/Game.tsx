@@ -54,7 +54,17 @@ const prizeImages: Record<string, string> = {
 };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4">
+    <div className="relative w-full h-screen overflow-hidden"> {/* Main container for background */}
+      <div
+        className="fixed inset-0 h-full z-0"
+ // Adjust opacity as needed
+        style={{
+          backgroundImage: "url('/assets/casino-background.jpg')", // Replace with your background image path
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+        }}
+      ></div>
+      <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4 relative z-10 pt-28"> {/* Content wrapper */}
       <div className="text-center">
         <h2 className="text-3xl font-bold text-casino-gold mb-2" style={{ fontFamily: '"Baskerville Old Face", serif' }}>Welcome, {playerName}!</h2>
         <p className="text-muted-foreground">Ready to spin and win?</p>
