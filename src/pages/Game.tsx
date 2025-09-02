@@ -60,7 +60,7 @@ const prizeImages: Record<string, string> = {
  // Adjust opacity as needed
         style={{
           backgroundImage: "url('/assets/casino-background.jpg')", // Replace with your background image path
-          backgroundSize: 'contain',
+          backgroundSize: '100% 100%',
           backgroundPosition: 'center',
         }}
       ></div>
