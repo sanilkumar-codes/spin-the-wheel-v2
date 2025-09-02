@@ -112,5 +112,6 @@ const prizeImages: Record<string, string> = {
 
       <Confetti active={showConfetti} />
     </div>
+  </div>
   );
 };
