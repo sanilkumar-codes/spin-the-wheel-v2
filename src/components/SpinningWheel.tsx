@@ -135,10 +135,10 @@ const drawRadius = radius - 15; // Leave space for glow
     
     // Draw text with glass effect
     ctx.textAlign = "center";
-    ctx.fillStyle = i % 2 === 0 ? 'rgba(222, 199, 166, 0.9)' : 'rgba(222, 199, 166, 0.7)';
+    ctx.fillStyle = i % 2 === 0 ? 'rgba(222, 199, 166, 1)' : 'rgba(222, 199, 166, 1)';
     ctx.font = "bold 14px 'Segoe UI', Arial, sans-serif";
     ctx.shadowColor = 'rgba(222, 199, 166, 0.8)';
-    ctx.shadowBlur = 6;
+    ctx.shadowBlur = 20;
     let text = gifts[i];
 let words = text.split(" ");
 
