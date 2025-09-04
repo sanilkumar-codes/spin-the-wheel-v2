@@ -66,7 +66,7 @@ const prizeImages: Record<string, string> = {
       ></div>
       <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8 px-4 relative z-10 pt-28"> {/* Content wrapper */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-casino-gold mb-2" style={{ fontFamily: '"Baskerville Old Face", serif' }}>Welcome, {playerName}!</h2>
+        <h2 className="text-3xl font-bold text-casino-gold mb-2" style={{ fontFamily: '"Baskerville Old Face", serif', filter: 'drop-shadow(0 0 10px hsl(var(--casino-gold) / 0.8))' }}>Welcome, {playerName}!</h2>
         <p className="text-muted-foreground">Ready to spin and win?</p>
       </div>
 
