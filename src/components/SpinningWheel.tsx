@@ -8,7 +8,7 @@ interface SpinningWheelProps {
 }
 
 const gifts = ["Free Kerastase Samples", "50% off on haircut", "Complimentary wash", "40% off on foot massage", "999 body therapy", "20% off on loreal hair spa"];
-//const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
+const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
 const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
 export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) => {
@@ -52,94 +52,48 @@ export const SpinningWheel = ({ onWin, disabled = false }: SpinningWheelProps) =
   };
 
   const drawWheel = () => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  const numSegments = gifts.length;
-  const radius = canvas.width / 2;
-const drawRadius = radius - 15; // Leave space for glow
-  const angle = (2 * Math.PI) / numSegments;
-  const innerRadius = radius * 0.15;
+    const numSegments = gifts.length;
+    const radius = canvas.width / 2;
+    const angle = (2 * Math.PI) / numSegments;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Icon emojis for each gift
-  const iconEmojis = ["🎁", "🎧", "👕", "☕", "✏️", "🎫"];
-
-  // Create gradient for glass effect
-  const outerGradient = ctx.createRadialGradient(radius, radius, innerRadius, radius, radius, radius);
-  outerGradient.addColorStop(0, 'rgba(222, 199, 166, 0.1)');
-  outerGradient.addColorStop(0.7, 'rgba(222, 199, 166, 0.05)');
-  outerGradient.addColorStop(0.9, 'rgba(0, 0, 0, 0.3)');
-
-  // Draw outer glass border with glow
-  ctx.beginPath();
-  ctx.arc(radius, radius, drawRadius, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(222, 199, 166, 0.6)';
-  ctx.lineWidth = 3;
-  ctx.shadowColor = 'rgba(222, 199, 166, 0.8)';
-  ctx.shadowBlur = 15;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // Draw segments with transparency
-  for (let i = 0; i < numSegments; i++) {
-    ctx.beginPath();
-    ctx.moveTo(radius, radius);
-    ctx.arc(radius, radius, drawRadius, i * angle, (i + 1) * angle);
-    
-    // Alternate between semi-transparent gold and dark
-    if (i % 2 === 0) {
-      // Create radial gradient for glass gold segments
-      const segmentGradient = ctx.createRadialGradient(radius, radius, innerRadius, radius, radius, drawRadius);
-      segmentGradient.addColorStop(0, 'rgba(222, 199, 166, 0.3)');
-      segmentGradient.addColorStop(0.5, 'rgba(222, 199, 166, 0.2)');
-      segmentGradient.addColorStop(1, 'rgba(222, 199, 166, 0.1)');
-      ctx.fillStyle = segmentGradient;
-    } else {
-      // Create radial gradient for dark segments
-      const segmentGradient = ctx.createRadialGradient(radius, radius, innerRadius, radius, radius, drawRadius);
-      segmentGradient.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
-      segmentGradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.4)');
-      segmentGradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
-      ctx.fillStyle = segmentGradient;
-    }
-    
-    ctx.fill();
-
-    // Draw subtle segment borders with glow
-    ctx.beginPath();
-    ctx.moveTo(radius + innerRadius * Math.cos(i * angle), radius + innerRadius * Math.sin(i * angle));
-    ctx.lineTo(radius + (drawRadius) * Math.cos(i * angle), radius + (drawRadius) * Math.sin(i * angle));
-    ctx.strokeStyle = 'rgba(222, 199, 166, 0.4)';
-    ctx.lineWidth = 1;
-    
+    // Icon emojis for each gift
+    const iconEmojis = ["🎁", "🎧", "👕", "☕", "✏️", "🎫"];
+ctx.beginPath();
+    ctx.arc(radius, radius, radius - 2, 0, 2 * Math.PI);
+    ctx.strokeStyle = "#dec7a6";
+    ctx.lineWidth = 16;
     ctx.stroke();
-    
+    for (let i = 0; i < numSegments; i++) {
+      ctx.beginPath();
+      ctx.moveTo(radius, radius);
+      ctx.arc(radius, radius, radius, i * angle, (i + 1) * angle);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
 
-    ctx.save();
-    ctx.translate(radius, radius);
-    ctx.rotate(i * angle + angle / 2);
-    
-    // Draw icon with glow effect
-   /* ctx.font = "28px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.shadowColor = 'rgba(222, 199, 166, 0.8)';
-    ctx.shadowBlur = 8;
-    ctx.fillText(iconEmojis[i], radius - 100, -8);
-    ctx.shadowBlur = 0; */
-    
-    // Draw text with glass effect
-    ctx.textAlign = "center";
-    ctx.fillStyle = i % 2 === 0 ? 'rgba(222, 199, 166, 0.9)' : 'rgba(222, 199, 166, 0.7)';
-    ctx.font = "bold 14px 'Segoe UI', Arial, sans-serif";
-    ctx.shadowColor = 'rgba(222, 199, 166, 0.8)';
-    ctx.shadowBlur = 6;
-    let text = gifts[i];
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(i * angle + angle / 2);
+      
+      // Draw icon
+      /*ctx.font = "32px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(iconEmojis[i], radius - 65, -10);*/
+      
+      // Draw text
+      ctx.textAlign = "center";
+ctx.fillStyle = i % 2 === 0 ? "#000" : "#dec7a6";
+ctx.font = "bold 14px Arial";
+
+let text = gifts[i];
 let words = text.split(" ");
 
 // Break into 3 lines: first word, second word, rest
@@ -148,69 +102,19 @@ let line2 = words[1] || "";
 let line3 = words.slice(2).join(" ") || "";
 
 if (line3) {
-  ctx.fillText(line1, drawRadius - 65, -15);   // first line
-  ctx.fillText(line2, drawRadius - 65, 0);  // second line
-  ctx.fillText(line3, drawRadius - 65, 15);  // third line
+  ctx.fillText(line1, radius - 65, -15);   // first line
+  ctx.fillText(line2, radius - 65, 0);  // second line
+  ctx.fillText(line3, radius - 65, 15);  // third line
 } else if (line2) {
-  ctx.fillText(line1, drawRadius - 65, -10);   // first line
-  ctx.fillText(line2, drawRadius - 65, 10);  // second line
+  ctx.fillText(line1, radius - 65, -10);   // first line
+  ctx.fillText(line2, radius - 65, 10);  // second line
 } else {
-  ctx.fillText(line1, drawRadius - 65, 15);  // single line
+  ctx.fillText(line1, radius - 65, 15);  // single line
 }
-    
-    
-    ctx.restore();
-// Draw consistent outer border with glow
-ctx.beginPath();
-ctx.arc(radius, radius, drawRadius, 0, 2 * Math.PI);
-ctx.strokeStyle = 'rgba(222, 199, 166, 0.6)';
-ctx.lineWidth = 2;
-ctx.shadowColor = 'rgba(222, 199, 166, 0.8)';
-ctx.shadowBlur = 8;
-ctx.stroke();
-ctx.shadowBlur = 0;
-  }
-
-  // Draw inner circle with glass effect
-  const innerGradient = ctx.createRadialGradient(radius, radius, 0, radius, radius, innerRadius);
-  innerGradient.addColorStop(0, 'rgba(222, 199, 166, 0.8)');
-  innerGradient.addColorStop(0.6, 'rgba(222, 199, 166, 0.6)');
-  innerGradient.addColorStop(1, 'rgba(222, 199, 166, 0.4)');
-  
-  ctx.beginPath();
-  ctx.arc(radius, radius, innerRadius, 0, 2 * Math.PI);
-  ctx.fillStyle = innerGradient;
-  ctx.fill();
-  
-  // Add glass highlight to inner circle
-  ctx.strokeStyle = 'rgba(222, 199, 166, 0.8)';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = 'rgba(222, 199, 166, 1)';
-  ctx.shadowBlur = 10;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // Draw center dot with glow
-  ctx.beginPath();
-  ctx.arc(radius, radius, 8, 0, 2 * Math.PI);
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(222, 199, 166, 0.9)';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = 'rgba(222, 199, 166, 1)';
-  ctx.shadowBlur = 8;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // Add overall glass overlay effect
-  ctx.globalCompositeOperation = 'overlay';
-  ctx.fillStyle = outerGradient;
-  ctx.beginPath();
-  ctx.arc(radius, radius, drawRadius - 4, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.globalCompositeOperation = 'source-over';
-};
       
+      ctx.restore();
+    }
+  };
 
   useEffect(() => {
     drawWheel();
@@ -245,130 +149,31 @@ ctx.shadowBlur = 0;
     }, 5200);
   };
 
-  // REPLACE the entire return statement WITH:
-return (
-  <div className="flex flex-col items-center gap-4 p-0" >
-    <div className="relative w-97 h-97">
-      {/* Elegant pointer with glass effect */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3 z-20">
-        <div className="relative">
-          <div 
-            className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[35px] border-l-transparent border-r-transparent border-b-casino-gold"
-            style={{
-              filter: 'drop-shadow(0 0 10px hsl(var(--casino-gold) / 0.8))',
-            }}
-          ></div>
-          <div 
-            className="absolute top-[35px] left-1/2 transform -translate-x-1/2 w-2 h-6 bg-casino-gold rounded-b-full"
-            style={{
-              filter: 'drop-shadow(0 0 5px hsl(var(--casino-gold) / 0.6))',
-            }}
-          ></div>
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <div className="relative w-80 h-80">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-10">
+          <div className="w-0 h-0 border-l-[18px] border-r-[18px] border-b-[28px] border-l-transparent border-r-transparent border-b-casino-gold"></div>
         </div>
-      </div>
-      
-      {/* Wheel container with luxury glass styling and glass ring effects */}
-      <div 
-        className="relative w-full h-full rounded-full p-2  flex items-center justify-center backdrop-blur-sm"
-        style={{
-          background: 'var(--gradient-glass)',
-          boxShadow: 'var(--shadow-glass)',
-          border: '1px solid hsl(var(--glass-border))',
-
-        }}
-      >
-{/* Glass background fill in the space between wheel and container */}
-<div 
-  className="absolute inset-2 rounded-full pointer-events-none"
-  style={{
-    background: 'radial-gradient(circle, rgba(255,255,255,0.1) 65%, rgba(222,199,166,0.15) 75%, transparent 100%)',
-    backdropFilter: 'blur(5px)',
-  }}
-/>
-
-        {/* Outer glass ring with glow */}
-        <div 
-          className="absolute inset-2 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, transparent 75%, hsl(var(--casino-gold) / 0.15) 80%, hsl(var(--casino-gold) / 0.25) 85%, transparent 90%)',
-            border: '1px solid hsl(var(--casino-gold) / 0.4)',
-            boxShadow: 'inset 0 0 25px hsl(var(--casino-gold) / 0.2), 0 0 40px hsl(var(--casino-gold) / 0.4), 0 0 60px hsl(var(--casino-gold) / 0.2)',
-          }}
-        />
-        
-        {/* Middle glass ring with glow */}
-        <div 
-          className="absolute inset-4 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, transparent 80%, hsl(var(--casino-gold) / 0.1) 85%, hsl(var(--casino-gold) / 0.2) 90%, transparent 95%)',
-            border: '1px solid hsl(var(--casino-gold) / 0.3)',
-            boxShadow: 'inset 0 0 20px hsl(var(--casino-gold) / 0.15), 0 0 30px hsl(var(--casino-gold) / 0.3)',
-          }}
-        />
-        
-        {/* Inner glass ring with glow */}
-        <div 
-          className="absolute inset-6 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, transparent 85%, hsl(var(--casino-gold) / 0.08) 90%, hsl(var(--casino-gold) / 0.15) 95%, transparent 100%)',
-            border: '1px solid hsl(var(--casino-gold) / 0.25)',
-            boxShadow: 'inset 0 0 15px hsl(var(--casino-gold) / 0.1), 0 0 25px hsl(var(--casino-gold) / 0.25)',
-          }}
-        />
-        
         <canvas
           ref={canvasRef}
-          width={350}
-          height={350}
-          className="rounded-full relative z-10"
-          style={{
-            filter: 'drop-shadow(0 0 20px rgba(222, 199, 166, 0.3))',
-            background: 'radial-gradient(circle, rgba(222, 199, 166, 0.05), rgba(0, 0, 0, 0.8))',
-          }}
+          width={320}
+          height={320}
+          className="rounded-full shadow-[var(--shadow-gold)]"
         />
-
+<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-casino-gold rounded-full shadow-lg border-4 border-casino-black z-10 flex items-center justify-center">
+          <div className="w-4 h-4 bg-casino-black rounded-full"></div>
+        </div>
       </div>
-      
-      {/* Center hub with enhanced glass effect */}
-      <div 
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-casino-gold rounded-full z-10 flex items-center justify-center backdrop-blur-sm"
-        style={{
-          background: 'radial-gradient(circle, hsl(var(--casino-gold) / 0.9), hsl(var(--casino-gold) / 0.7))',
-          boxShadow: 'inset 0 2px 4px hsl(var(--casino-gold) / 0.3), 0 0 20px hsl(var(--casino-gold) / 0.6)',
-          border: '2px solid hsl(var(--casino-gold) / 0.8)',
-        }}
+      <Button
+        onClick={spin}
+        disabled={spinning || disabled}
+        variant="default"
+        size="lg"
+        className="text-xl px-8 py-4 bg-casino-gold text-casino-black hover:bg-casino-gold-dark disabled:opacity-50 disabled:cursor-not-allowed font-bold shadow-[var(--shadow-gold)]"
       >
-        <div 
-          className="w-6 h-6 bg-casino-black rounded-full"
-          style={{
-            boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.5)',
-          }}
-        ></div>
-      </div>
+        {spinning ? '🎡 Spinning...' : '🎡 Spin'}
+      </Button>
     </div>
-    
-    <Button
-      onClick={spin}
-      disabled={spinning || disabled}
-      size="lg"
-      className="text-xl px-12 py-6 bg-casino-gold text-casino-black hover:bg-casino-gold-light disabled:opacity-50 disabled:cursor-not-allowed font-bold rounded-xl border border-casino-gold-light backdrop-blur-sm transition-[var(--transition-smooth)] hover:scale-105"
-      style={{
-        background: 'var(--gradient-gold)',
-        boxShadow: 'var(--shadow-gold)',
-        filter: spinning ? 'brightness(0.8)' : 'brightness(1)',
-      }}
-    >
-      {spinning ? (
-        <span className="flex items-center gap-2">
-          <span className="animate-spin">🎡</span> 
-          Spinning...
-        </span>
-      ) : (
-        <span className="flex items-center gap-2">
-          🎡 SPIN THE WHEEL
-        </span>
-      )}
-    </Button>
-  </div>
-);
-}
+  );
+};
