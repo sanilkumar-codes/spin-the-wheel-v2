@@ -54,7 +54,7 @@ const prizeImages: Record<string, string> = {
 };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden"> {/* Main container for background */}
+    <div className="relative w-full h-screen overflow-visible"> {/* Main container for background */}
       <div
         className="fixed inset-0 h-full z-0"
  // Adjust opacity as needed
