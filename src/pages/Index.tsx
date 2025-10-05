@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserForm } from '@/components/UserForm';
 import { Game } from '@/pages/Game';
 import casinoBackground from '@/assets/form-bg.jpg';
@@ -7,7 +7,12 @@ import logo from '@/assets/logo.png';
 const Index = () => {
   const [currentPage, setCurrentPage] = useState<'form' | 'game'>('form');
   const [playerData, setPlayerData] = useState<{ name: string; contact: string } | null>(null);
-
+useEffect(() => {
+    const backendUrl = 'https://spin-the-wheel-ksk3.onrender.com/ping'; // 🔁 replace with your actual Render backend URL
+    fetch(backendUrl, { method: 'GET', credentials: 'include' })
+      .then(() => console.log('✅ Backend pinged to prevent cold start'))
+      .catch(err => console.warn('⚠️ Ping failed:', err));
+  }, []);
   const handleFormSubmit = async (name: string, contact: string) => {
     setPlayerData({ name, contact });
     setCurrentPage('game');
