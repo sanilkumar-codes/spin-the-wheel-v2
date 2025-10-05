@@ -67,6 +67,10 @@ const SPREADSHEET_ID = process.env.SPREADSHEET_ID || '';
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+app.get('/ping', (req, res) => {
+  res.json({ message: 'pong', time: new Date().toISOString() });
+});
+
 
 // Check if user already played
 app.get('/checkUser', async (req, res) => {
