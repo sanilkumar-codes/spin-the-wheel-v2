@@ -7,7 +7,7 @@ interface SpinningWheelProps {
   disabled?: boolean;
 }
 
-const gifts = ["Buy 1 Get 1 Pedicure", "Buy 1 Get 1 Gel nail Polish", "Buy 1 Get 1 Loreal spa", "Buy 1 Get 1 Body Relaxing Session", "Free Haircut"];
+const gifts = ["Buy 1 Get 1 Pedicure", "Buy 1 Get 1 Gel nail Polish", "Buy 1 Get 1 Loreal spa", "Buy 1 Get 1 Body Relaxing Session", "Free Haircut","20% off on next service"];
 //const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
 const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
