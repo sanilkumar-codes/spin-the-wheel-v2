@@ -41,6 +41,7 @@ All colors MUST be HSL.
 
     /* Custom casino colors */
     --casino-gold: 45 45% 85%;
+    --casino-gold-1:35 42% 82%;
     --casino-gold-dark: 45 35% 75%;
     --casino-gold-light: 45 55% 90%;
     --casino-black: 0 0% 0%;
