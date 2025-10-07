@@ -95,9 +95,9 @@ const drawRadius = radius - 15; // Leave space for glow
     if (i % 2 === 0) {
       // Create radial gradient for glass gold segments
       const segmentGradient = ctx.createRadialGradient(radius, radius, innerRadius, radius, radius, drawRadius);
-      segmentGradient.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
-      segmentGradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.4)');
-      segmentGradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
+      segmentGradient.addColorStop(0, 'rgba(222, 199, 166, 0.3)');
+      segmentGradient.addColorStop(0.5, 'rgba(222, 199, 166, 0.2)');
+      segmentGradient.addColorStop(1, 'rgba(222, 199, 166, 0.1)');
       ctx.fillStyle = segmentGradient;
     } else {
       // Create radial gradient for dark segments
