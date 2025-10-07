@@ -54,7 +54,7 @@ export default {
 				},
 				casino: {
 					gold: 'hsl(var(--casino-gold))',
-					'gold-1':'hsl(var(--casino-gold-1))'
+					'gold-1':'hsl(var(--casino-gold-1))',
 					'gold-dark': 'hsl(var(--casino-gold-dark))',
 					'gold-light': 'hsl(var(--casino-gold-light))',
 					black: 'hsl(var(--casino-black))',
