@@ -143,9 +143,9 @@ const drawRadius = radius - 15; // Leave space for glow
 let words = text.split(" ");
 
 // Break into 3 lines: first word, second word, rest
-let line1 = words[0] || "";
-let line2 = words[1] || "";
-let line3 = words.slice(2).join(" ") || "";
+let line1 = words[0]+words[1] || "";
+let line2 = words[2]+words[3] || "";
+let line3 = words.slice(4).join(" ") || "";
 
 if (line3) {
   ctx.fillText(line1, drawRadius - 65, -15);   // first line
