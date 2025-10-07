@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { UserForm } from '@/components/UserForm';
 import { Game } from '@/pages/Game';
-import casinoBackground from '@/assets/form-bg.jpg';
+import casinoBackground from '@/assets/form-bg-1.jpg';
 import logo from '@/assets/logo.png';
 
 const Index = () => {
