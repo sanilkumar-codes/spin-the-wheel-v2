@@ -73,7 +73,7 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
   return (
     <Card className="w-full max-w-md bg-card border-casino-gold/20 shadow-[var(--shadow-gold)]">
       <CardHeader>
-        <CardTitle className="text-center text-casino-gold text-2xl font-bold">
+        <CardTitle className="text-center text-casino-gold-1 text-2xl font-bold">
           Enter Your Details
         </CardTitle>
       </CardHeader>
@@ -100,7 +100,7 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-casino-gold text-casino-black hover:bg-casino-gold-dark font-bold py-3 shadow-[var(--shadow-gold)] transition-[var(--transition-smooth)]"
+            className="w-full bg-casino-gold-1 text-casino-black hover:bg-casino-gold-dark font-bold py-3 shadow-[var(--shadow-gold)] transition-[var(--transition-smooth)]"
           >
             {loading ? (
               <>
