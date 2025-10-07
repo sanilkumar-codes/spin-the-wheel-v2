@@ -45,12 +45,11 @@ export const Game = ({ playerName, playerContact, onBackToForm }: GameProps) => 
     onBackToForm();
   };
 const prizeImages: Record<string, string> = {
-  "Free Kerastase Samples": "/assets/samples.jpg",
-  "50% off on haircut": "/assets/haircut.jpg",
-  "Complimentary wash": "/assets/wash.jpg",
-  "40% off on foot massage": "/assets/footmassage.jpg",
-  "999 body therapy": "/assets/bodymassage.jpg",
-  "20% off on loreal hair spa": "/assets/hairspa.jpg",
+  "Buy 1 Get 1 Pedicure": "/assets/footmassage.jpg",
+  "Buy 1 Get 1 Gel nail Polish": "/assets/nail-polish.jpg",
+  "Buy 1 Get 1 Loreal spa": "/assets/hairspa.jpg",
+  "Buy 1 Get 1 Body Relaxing Session": "/assets/bodymassage.jpg",
+  "Free Haircut": "/assets/haircut-1.jpg",
 };
 
   return (
