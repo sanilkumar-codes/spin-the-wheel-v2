@@ -7,7 +7,7 @@ interface SpinningWheelProps {
   disabled?: boolean;
 }
 
-const gifts = ["Buy 1 Get 1 Pedicure", "Buy 1 Get 1 Gel nail Polish", " Buy 1 Get 1 Loreal spa", "Buy 1 Get 1 Body Relaxing Session", "Free Haircut"];
+const gifts = ["Buy 1 Get 1 Pedicure", "Buy 1 Get 1 Gel nail Polish", "Buy 1 Get 1 Loreal spa", "Buy 1 Get 1 Body Relaxing Session", "Free Haircut"];
 //const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
 const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
@@ -143,9 +143,10 @@ const drawRadius = radius - 15; // Leave space for glow
 let words = text.split(" ");
 
 // Break into 3 lines: first word, second word, rest
-let line1 = words[0]+words[1] || "";
-let line2 = words[2]+words[3] || "";
-let line3 = words.slice(4).join(" ") || "";
+let line1 = (words[0] || "")+(words[0]?" ":"")+(words[1] || "");
+let line2 = (words[2] || "")+(words[2]?" ":"")+(words[3] || "");
+let line3= (words[4] || "")+(words[4]?" ":"")+(words[5] || "");
+let line4 = words.slice(6).join(" ") || "";
 
 if (line3) {
   ctx.fillText(line1, drawRadius - 65, -15);   // first line
