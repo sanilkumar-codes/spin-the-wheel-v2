@@ -7,7 +7,7 @@ interface SpinningWheelProps {
   disabled?: boolean;
 }
 
-const gifts = ["Free Kerastase Samples", "50% off on haircut", "Complimentary wash", "40% off on foot massage", "999 body therapy", "20% off on loreal hair spa"];
+const gifts = ["Buy 1 Get 1 Pedicure", "Buy 1 Get 1 Gel nail Polish", " Buy 1 Get 1 Loreal spa", "Buy 1 Get 1 Body Relaxing Session", "Free Haircut"];
 //const colors = ["#dec7a6", "#000", "#dec7a6", "#000", "#dec7a6", "#000"];
 const giftIcons = [Gift, Headphones, Shirt, Coffee, Pen, Ticket];
 
