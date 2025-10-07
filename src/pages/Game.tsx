@@ -50,6 +50,7 @@ const prizeImages: Record<string, string> = {
   "Buy 1 Get 1 Loreal spa": "/assets/hairspa.jpg",
   "Buy 1 Get 1 Body Relaxing Session": "/assets/bodymassage.jpg",
   "Free Haircut": "/assets/haircut-1.jpg",
+  "20% off on next service":"/assets/20off.jpg",
 };
 
   return (
