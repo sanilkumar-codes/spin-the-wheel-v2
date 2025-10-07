@@ -95,9 +95,9 @@ const drawRadius = radius - 15; // Leave space for glow
     if (i % 2 === 0) {
       // Create radial gradient for glass gold segments
       const segmentGradient = ctx.createRadialGradient(radius, radius, innerRadius, radius, radius, drawRadius);
-      segmentGradient.addColorStop(0, 'rgba(222, 199, 166, 0.3)');
-      segmentGradient.addColorStop(0.5, 'rgba(222, 199, 166, 0.2)');
-      segmentGradient.addColorStop(1, 'rgba(222, 199, 166, 0.1)');
+      segmentGradient.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
+      segmentGradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.4)');
+      segmentGradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
       ctx.fillStyle = segmentGradient;
     } else {
       // Create radial gradient for dark segments
@@ -148,7 +148,12 @@ let line2 = (words[2] || "")+(words[2]?" ":"")+(words[3] || "");
 let line3= (words[4] || "")+(words[4]?" ":"")+(words[5] || "");
 let line4 = words.slice(6).join(" ") || "";
 
-if (line3) {
+if(line4){
+  ctx.fillText(line1, drawRadius - 65, -20);   // first line
+  ctx.fillText(line2, drawRadius - 65, -10);  // second line
+  ctx.fillText(line3, drawRadius - 65, 10);  // third line
+  ctx.fillText(line4, drawRadius - 65, 20);
+else if (line3) {
   ctx.fillText(line1, drawRadius - 65, -15);   // first line
   ctx.fillText(line2, drawRadius - 65, 0);  // second line
   ctx.fillText(line3, drawRadius - 65, 15);  // third line
