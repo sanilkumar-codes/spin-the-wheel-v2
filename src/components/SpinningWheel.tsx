@@ -149,10 +149,10 @@ let line3= (words[4] || "")+(words[4]?" ":"")+(words[5] || "");
 let line4 = words.slice(6).join(" ") || "";
 
 if(line4){
-  ctx.fillText(line1, drawRadius - 65, -20);   // first line
+  ctx.fillText(line1, drawRadius - 65, -30);   // first line
   ctx.fillText(line2, drawRadius - 65, -10);  // second line
   ctx.fillText(line3, drawRadius - 65, 10);  // third line
-  ctx.fillText(line4, drawRadius - 65, 20);
+  ctx.fillText(line4, drawRadius - 65, 30);
 }
 else if (line3) {
   ctx.fillText(line1, drawRadius - 65, -15);   // first line
