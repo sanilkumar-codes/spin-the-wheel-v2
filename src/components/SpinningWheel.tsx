@@ -162,7 +162,7 @@ else if (line3) {
   ctx.fillText(line1, drawRadius - 65, -10);   // first line
   ctx.fillText(line2, drawRadius - 65, 10);  // second line
 } else {
-  ctx.fillText(line1, drawRadius - 65, 15);  // single line
+  ctx.fillText(line1, drawRadius - 65, 0);  // single line
 }
     
     
